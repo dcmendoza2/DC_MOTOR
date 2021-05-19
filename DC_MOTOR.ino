@@ -69,22 +69,26 @@ void loop() {
   
   // PWM frequency is determined by 1/(2*k*10e-6)
   int k = 1000;
+  double multiplier = k/180.0;
   double f = 1000000.0/(2*k);
   Serial.print("PWM Frequency: ");
   Serial.print(f);
   Serial.print("Hz Duty: ");
-  Serial.println((k + angDispX*5)/(2.0*k));
+  Serial.println((k + angDispX*multiplier)/(2.0*k));
+  digitalWrite(motorPin, HIGH);
+  delayMicroseconds(k + angDispX * multiplier);
+  digitalWrite(motorPin, LOW);
+  delayMicroseconds(k - angDispX * multiplier);
+  /*
   if (angDispX > 0){
-    digitalWrite(motorPin, HIGH);
-    delayMicroseconds(k + angDispX * 5);
-    digitalWrite(motorPin, LOW);
-    delayMicroseconds(k - angDispX * 5);
+    
   }
   else{
     digitalWrite(motorPin, LOW);
     delayMicroseconds(2*k);
   }
   // delay(100);
+  */
 }
 
 
